@@ -29,12 +29,13 @@ class AccordionItem extends React.Component {
   }
   render() {
     const stateStyle = this.state.active ? styles.active : styles.inactive;
+    const activeClass = this.state.active ? "active" : "inactive";
     const question = this.props.details;
     return (
       <section>
-        <div onClick={this.toggle}>
+        <div className={activeClass} onClick={this.toggle}>
           <span className="summary">{question.summary}</span>
-          <span style={stateStyle} className="details">{question.answer}</span>
+          <span style={stateStyle} className="answer">{question.answer}</span>
         </div>
       </section>
     );

@@ -32,12 +32,10 @@ class AccordionItem extends React.Component {
     const question = this.props.details;
     return (
       <section>
-        <a onClick={this.toggle}>
-          <div>
-            <span className="summary">{question.summary}</span>
-            <span className="details">{question.answer}</span>
-          </div>
-        </a>
+        <div onClick={this.toggle}>
+          <span className="summary">{question.summary}</span>
+          <span style={stateStyle} className="details">{question.answer}</span>
+        </div>
       </section>
     );
   }
@@ -47,7 +45,7 @@ class Accordion extends React.Component {
   constructor() {
     super();
     this.state = {
-      questions: require("./sample_questions")
+      questions: require("./sample_questions"),
     };
     this.renderQuestion = this.renderQuestion.bind(this);
   }

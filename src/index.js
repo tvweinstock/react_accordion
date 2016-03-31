@@ -1,15 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom'
-/*var Board = require('./Board');
-
-ReactDOM.render(
-  <Board knightPosition={[0, 0]} />,
-  document.getElementById('root')
-);*/
-
 
 // https://egghead.io/lessons/react-building-an-accordion-component-with-react
-// http://stackoverflow.com/questions/32157286/rendering-react-components-from-array-of-objects
+
 const styles = {
   active: {
     display: 'inherit'
@@ -36,38 +29,45 @@ class AccordionItem extends React.Component {
   }
   render() {
     const stateStyle = this.state.active ? styles.active : styles.inactive;
-    const questionComponents = this.props.questions.map(function(question, key) {
-      return (
-        <div key={key}>
-          <span className="summary">{question.summary}</span>
-          <span className="details">{question.details}</span>
-        </div>
-      ) 
-    });
-
+    const question = this.props.details;
     return (
       <section>
         <a onClick={this.toggle}>
-          {questionComponents}
+          <div>
+            <span className="summary">{question.summary}</span>
+            <span className="details">{question.answer}</span>
+          </div>
         </a>
       </section>
     );
   }
 }
 
-const questions = [
-  {summary:'question one',details:'yeahhh question oneeeee!!'},
-  {summary:'question two',details:'q2 babbbbyy'}
-]; 
-
+class Accordion extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      questions: require("./sample_questions")
+    };
+    this.renderQuestion = this.renderQuestion.bind(this);
+  }
+  renderQuestion(key) {
+    return <AccordionItem key={key} index={key} details={this.state.questions[key]} />
+  }
+  render() {
+    return(
+      <div>
+        {Object.keys(this.state.questions).map(this.renderQuestion)}
+      </div>
+    )
+  }
+}
 ReactDOM.render(
-  <AccordionItem questions={questions} />,
+  <Accordion />,
   document.getElementById('accordion')
 );
 
 
-// TO DO FIGURE OUT HOW TO TOGGLE THE CONTENT WITH THE TABS!!!!
-// DO IT WITH CSS YES YES
-/*        <p style={stateStyle}>
-          {detailsComponents}
-        </p>*/
+// TODO move toggle active to parent element
+
+
